@@ -1,6 +1,4 @@
-import email
 from multiprocessing import context
-from queue import Empty
 from django.shortcuts import redirect, render
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from .models import Post,Category,Comment
@@ -8,9 +6,7 @@ from next_prev import next_in_order,prev_in_order
 from django.db.models import Q
 from .forms import ContactForm
 from django.core.mail import send_mail
-from django.conf import settings
 from django.contrib import messages
-from django.http import HttpResponse
 
 # from 
 # Create your views here.
