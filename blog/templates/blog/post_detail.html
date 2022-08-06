@@ -1,0 +1,352 @@
+{% extends 'blog/index.html' %}
+{% load static %}
+
+
+{% block content %}
+<!-- content
+            ================================================== -->
+    <section class="s-content s-content--single">
+        <div class="row">
+            <div class="column large-12">
+
+                <article class="s-post entry format-standard">
+
+                    <div class="s-content__media">
+                        <div class="s-content__post-thumb">
+                            <img src="{{post.image.url}}" 
+                                sizes="(max-width: 2100px) 100vw, 2100px" alt=""
+                                style="max-width: 21"
+                                >
+                        </div>
+                    </div> <!-- end s-content__media -->
+
+                    <div class="s-content__primary">
+
+                        <h2 class="s-content__title s-content__title--post">{{post.title|title}}</h2>
+
+                        <ul class="s-content__post-meta">
+                            <li class="date">{{post.created}}</li>
+                            <li class="cat">
+                                {% for category in post.category.all %}
+                                <a href="">{{category|title}}</a>
+                                {% endfor %}
+                            </li>
+                        </ul>
+
+                        <p class="lead">
+                            {{ post.body|safe }}
+                        </p>
+
+                        <div class="s-content__author">
+                            <img src="{{post.author.avatar.url}}" alt="">
+
+                            <div class="about">
+                                <h5><a href="#">{{post.author|title}}</a></h5>
+                            
+                                <p>
+                                   {{post.author.bio}}
+                                </p>
+
+                                <ul class="author-social">
+                                    {% if post.author.facebook == None %}
+                                    <li><a href="{{ post.author.facebook }}" style="display:none;"></a></li>
+                                    {% else %}
+                                    <li><a href="{{post.author.facebook}}">Facebook</a></li>
+                                    {% endif %}
+
+
+                                    {% if post.author.dribbble == None %}
+                                         <li><a href="{{post.author.dribbble}}" style="display:none;">Dribbble</a></li>
+
+                                    {% else %}
+                                          <li><a href="{{post.author.dribbble}}">Dribbble</a></li>
+
+                                    {% endif %}
+
+                                    {% if post.author.twitter == None %}
+                                        <li><a href="{{post.author.twitter}}" style="display:none;">Twitter</a></li>
+
+                                    {% else %}
+                                        <li><a href="{{post.author.twitter}}">Twitter</a></li>
+                                    {% endif %}
+
+
+                                    {% if post.author.instagram == None %}
+                                    <li><a href="{{post.author.instagram}}" style="display: none;">Instagram</i></a></li>
+
+                                    {% else %}
+                                    <li><a href="{{post.author.instagram}}">Instagram</i></a></li>
+                                    {% endif %}
+
+                                </ul>
+                            </div>
+                        </div> <!-- end s-content__author -->
+
+
+                        <div class="s-content__pagenav group">
+                            <div class="prev-nav">
+                                <a href="{% url 'post_detail' prev.id %}" rel="prev">
+                                    <span>Previous</span>
+                                    {{prev.title|title}} 
+                                </a>
+                            </div>
+                            
+                             <div class="next-nav">
+                                 <a href="{% url 'post_detail' next.id %}" rel="next">
+                                     <span>Next</span>
+                                    {{next.title|title}}
+                                 </a>
+                             </div>
+                         </div> <!-- end s-content__pagenav -->
+
+                    </div> <!-- end s-content__primary -->
+                </article>
+
+            </div> <!-- end column -->
+        </div> <!-- end row -->
+
+
+        <!-- comments
+        ================================================== -->
+        <div class="comments-wrap">
+
+            <div id="comments" class="row">
+                <div class="column">
+
+                    {% if comment.count > 1 %}
+                    <h3>{{comment.count}} Comments</h3>
+                    {% else %}
+                    <h3>{{comment.count}} Comment</h3>
+                    {% endif %}
+                    <!-- START commentlist -->
+                    <ol class="commentlist">
+
+                        <!-- <li class="depth-1 comment">
+
+                            <div class="comment__avatar">
+                                <img class="avatar" src="images/avatars/user-01.jpg" alt="" width="50" height="50">
+                            </div>
+
+                            <div class="comment__content">
+
+                                <div class="comment__info">
+                                    <div class="comment__author">Itachi Uchiha</div>
+
+                                    <div class="comment__meta">
+                                        <div class="comment__time">Sept 05, 2020</div>
+                                        <div class="comment__reply">
+                                            <a class="comment-reply-link" href="#0">Reply</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="comment__text">
+                                <p>Adhuc quaerendum est ne, vis ut harum tantas noluisse, id suas iisque mei. Nec te inani ponderum vulputate,
+                                facilisi expetenda has et. Iudico dictas scriptorem an vim, ei alia mentitum est, ne has voluptua praesent.</p>
+                                </div>
+
+                            </div>
+
+                        </li> end comment level 1 -->
+<!-- 
+                        <li class="thread-alt depth-1 comment">
+
+                            <div class="comment__avatar">
+                                <img class="avatar" src="images/avatars/user-04.jpg" alt="" width="50" height="50">
+                            </div>
+
+                            <div class="comment__content">
+
+                                <div class="comment__info">
+                                    <div class="comment__author">John Doe</div>
+
+                                    <div class="comment__meta">
+                                        <div class="comment__time">Sept 05, 2020</div>
+                                        <div class="comment__reply">
+                                            <a class="comment-reply-link" href="#0">Reply</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="comment__text">
+                                <p>Sumo euismod dissentiunt ne sit, ad eos iudico qualisque adversarium, tota falli et mei. Esse euismod
+                                urbanitas ut sed, et duo scaevola pericula splendide. Primis veritus contentiones nec ad, nec et
+                                tantas semper delicatissimi.</p>
+                                </div>
+
+                            </div>
+
+                            <ul class="children">
+
+                                <li class="depth-2 comment">
+
+                                    <div class="comment__avatar">
+                                        <img class="avatar" src="images/avatars/user-03.jpg" alt="" width="50" height="50">
+                                    </div>
+
+                                    <div class="comment__content">
+
+                                        <div class="comment__info">
+                                            <div class="comment__author">Kakashi Hatake</div>
+
+                                            <div class="comment__meta">
+                                                <div class="comment__time">Sept, 05 2020</div>
+                                                <div class="comment__reply">
+                                                    <a class="comment-reply-link" href="#0">Reply</a>
+                                                </div>
+                                            </div>
+                                        </div>
+
+                                        <div class="comment__text">
+                                            <p>Duis sed odio sit amet nibh vulputate
+                                            cursus a sit amet mauris. Morbi accumsan ipsum velit. Duis sed odio sit amet nibh vulputate
+                                            cursus a sit amet mauris</p>
+                                        </div>
+
+                                    </div>
+
+                                    <ul class="children">
+
+                                        <li class="depth-3 comment">
+
+                                            <div class="comment__avatar">
+                                                <img class="avatar" src="images/avatars/user-04.jpg" alt="" width="50" height="50">
+                                            </div>
+
+                                            <div class="comment__content">
+
+                                                <div class="comment__info">
+                                                    <div class="comment__author">John Doe</div>
+
+                                                    <div class="comment__meta">
+                                                        <div class="comment__time">Sept 04, 2020</div>
+                                                        <div class="comment__reply">
+                                                            <a class="comment-reply-link" href="#0">Reply</a>
+                                                        </div>
+                                                    </div>
+                                                </div>
+
+                                                <div class="comment__text">
+                                                <p>Investigationes demonstraverunt lectores legere me lius quod ii legunt saepius. Claritas est
+                                                etiam processus dynamicus, qui sequitur mutationem consuetudium lectorum.</p>
+                                                </div>
+
+                                            </div>
+
+                                        </li>
+
+                                    </ul>
+
+                                </li>
+
+                            </ul>
+
+                        </li> end comment level 1 -->
+
+                        <!-- <li class="depth-1 comment">
+
+                            <div class="comment__avatar">
+                                <img class="avatar" src="images/avatars/user-02.jpg" alt="" width="50" height="50">
+                            </div>
+
+                            <div class="comment__content">
+
+                                <div class="comment__info">
+                                    <div class="comment__author">Shikamaru Nara</div>
+
+                                    <div class="comment__meta">
+                                        <div class="comment__time">Sept 03, 2020</div>
+                                        <div class="comment__reply">
+                                            <a class="comment-reply-link" href="#0">Reply</a>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <div class="comment__text">
+                                <p>Typi non habent claritatem insitam; est usus legentis in iis qui facit eorum claritatem.</p>
+                                </div>
+
+                            </div>
+
+                        </li>  end comment level 1 -->
+                        {% for comment in comment %}
+                        <li class="depth-1 comment">
+
+                            <div class="comment__avatar">
+                                <img class="avatar" src="{{comment.user.avatar.url}}" alt="" width="50" height="50">
+                            </div>
+
+                            <div class="comment__content">
+                                <div class="comment__info">
+                                    <div class="comment__author">{{comment.user.username}}</div>
+
+                                    <div class="comment__meta">
+                                        <div class="comment__time">{{comment.created|timesince}}</div>
+                                        <!-- <div class="comment__reply">
+                                            <a class="comment-reply-link" href="#0">Reply</a>
+                                        </div> -->
+                                    </div>
+                                </div>
+
+                                <div class="comment__text">
+                                <p>{{comment.message}}</p>
+                                </div>
+
+                            </div>
+
+                        </li>  <!-- end comment level 1 -->
+
+                        {% endfor %}
+
+                    </ol>
+                    <!-- END commentlist -->
+
+                </div> <!-- end col-full -->
+            </div> <!-- end comments -->
+
+
+            <div class="row comment-respond">
+
+                <!-- START respond -->
+                <div id="respond" class="column">
+
+                    <h3>
+                    Add Comment 
+                    <!-- <span>Your email address will not be published.</span> -->
+                    </h3>
+
+                    <form name="contactForm" id="contactForm" method="POST" action="" autocomplete="off">
+                        {% csrf_token %}
+                        <fieldset>
+                            <!-- <div class="form-field">
+                                <input name="cName" id="cName" class="h-full-width" placeholder="Your Name" value="" type="text">
+                            </div>
+
+                            <div class="form-field">
+                                <input name="cEmail" id="cEmail" class="h-full-width" placeholder="Your Email" value="" type="text">
+                            </div>
+
+                            <div class="form-field">
+                                <input name="cWebsite" id="cWebsite" class="h-full-width" placeholder="Website" value="" type="text">
+                            </div> -->
+
+                            <div class="message form-field">
+                                <textarea name="cMessage" id="cMessage" class="h-full-width" placeholder="Your Message"></textarea>
+                            </div>
+
+                            <input name="submit" id="submit" class="btn btn--primary btn-wide btn--large h-full-width" value="Add Comment" type="submit">
+
+                        </fieldset>
+                    </form> <!-- end form -->
+
+                </div>
+                <!-- END respond-->
+
+            </div> <!-- end comment-respond -->
+
+        </div>
+        
+        <!-- end comments-wrap -->
+
+    </section> <!-- end s-content -->
+{% endblock %}
