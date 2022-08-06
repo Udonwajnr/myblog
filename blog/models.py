@@ -2,7 +2,6 @@ from distutils.command.upload import upload
 from email.policy import default
 from pyexpat import model
 from tabnanny import verbose
-from tkinter import CASCADE
 from unicodedata import category
 from django.db import models
 from django.contrib.auth.models import AbstractUser
